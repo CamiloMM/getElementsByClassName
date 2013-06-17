@@ -32,6 +32,10 @@ module.exports = function(grunt) {
 				src: ['./src/polyfill.js'],
 				dest: './build/polyfill.js'
 			}
+			tests: {
+				src: ['./src/tests/**/*.js'],
+				dest: './tests/tests.js'
+			}
 		},
 		connect: {
 			root: {
@@ -65,7 +69,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-contrib-qunit');
 	
-	grunt.registerTask('build', ['concat:polyfill']);
+	grunt.registerTask('build', ['concat:polyfill', 'concat:tests']);
 	grunt.registerTask('compile', ['closurecompiler:compile', 'string-replace:cleanNewlines']);
 	grunt.registerTask('onlineTest', ['connect:root', 'qunit:online']);
 	grunt.registerTask('offlineTest', ['qunit:offline']);
