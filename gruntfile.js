@@ -33,7 +33,10 @@ module.exports = function(grunt) {
 				dest: './build/polyfill.js'
 			}
 			tests: {
-				src: ['./src/tests/**/*.js'],
+				src: [
+					'./src/tests/polyfill-module.js',
+					'./src/tests/polyfill/*.js'
+				],
 				dest: './tests/tests.js'
 			}
 		},
