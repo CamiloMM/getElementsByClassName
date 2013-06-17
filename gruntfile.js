@@ -31,7 +31,7 @@ module.exports = function(grunt) {
 			polyfill: {
 				src: ['./src/polyfill.js'],
 				dest: './build/polyfill.js'
-			}
+			},
 			tests: {
 				src: [
 					'./src/tests/polyfill-module.js',
