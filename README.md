@@ -1,3 +1,6 @@
+## This is a work in progress
+As soon as it isn't, I'll remove this header.
+
 ## Why another polyfill for `getElementsByClassName`?
 Because all I could find are 
 [ones](https://gist.github.com/eikes/2299607) 
