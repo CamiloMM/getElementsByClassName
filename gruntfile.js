@@ -1,6 +1,7 @@
 module.exports = function(grunt) {
 	
 	var path = require('path');
+	var exec = require('child_process').exec;
 	
 	grunt.initConfig({
 		closurecompiler: {
@@ -69,7 +70,6 @@ module.exports = function(grunt) {
 		karma: {
 			test: {
 				configFile: path.resolve(__dirname, 'karma.conf.js'),
-				autoWatch: false,
 				singleRun: true
 			}
 		}
@@ -86,9 +86,24 @@ module.exports = function(grunt) {
 	grunt.registerTask('compile', ['closurecompiler:compile', 'string-replace:cleanNewlines']);
 	grunt.registerTask('onlineTest', ['connect:root', 'qunit:online']);
 	grunt.registerTask('offlineTest', ['qunit:offline']);
-	grunt.registerTask('quickTest', ['offlineTest']);
 	grunt.registerTask('realTest', ['karma:test']);
 	grunt.registerTask('test', ['realTest']);
+	
+	// This is a bit ugly but I kinda just want it done with at the moment.
+	// The idea is that if we have a karma server running, use it, else use PhantomJS.
+	grunt.registerTask('quickTest', 'Run the appropriate quick test', function() {
+		var done = this.async();
+		exec('karma run', function(error, stdout, stderr) {
+			if (error) {
+				console.log('PhantomJS will be used.');
+				grunt.task.run('offlineTest');
+			}
+			else {
+				console.log('Karma test issued.');
+			}
+			done();
+		});
+	});
 	
 	grunt.registerTask('default', ['build', 'compile', 'quickTest']);
 	

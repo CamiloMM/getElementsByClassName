@@ -27,6 +27,6 @@
     "qunitjs": "~1.11.0",
     "karma-qunit": "0.0.1",
     "grunt-karma-0.9.1": "~0.4.3",
-	"karma-ie-launcher": "~0.0.1"
+    "karma-ie-launcher": "~0.0.1"
   }
 }
