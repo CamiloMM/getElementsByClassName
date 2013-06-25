@@ -1,5 +1,7 @@
 module.exports = function(grunt) {
 	
+	var path = require('path');
+	
 	grunt.initConfig({
 		closurecompiler: {
 			compile: {
@@ -63,7 +65,14 @@ module.exports = function(grunt) {
 					]
 				}
 			}
-		}		
+		},
+		karma: {
+			test: {
+				configFile: path.resolve(__dirname, 'karma.conf.js'),
+				autoWatch: false,
+				singleRun: true
+			}
+		}
 	});
 	
 	grunt.loadNpmTasks('grunt-closurecompiler');
@@ -71,13 +80,16 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-contrib-qunit');
+	grunt.loadNpmTasks('grunt-karma-0.9.1');
 	
 	grunt.registerTask('build', ['concat:polyfill', 'concat:tests']);
 	grunt.registerTask('compile', ['closurecompiler:compile', 'string-replace:cleanNewlines']);
 	grunt.registerTask('onlineTest', ['connect:root', 'qunit:online']);
 	grunt.registerTask('offlineTest', ['qunit:offline']);
-	grunt.registerTask('test', ['offlineTest']);
+	grunt.registerTask('quickTest', ['offlineTest']);
+	grunt.registerTask('realTest', ['karma:test']);
+	grunt.registerTask('test', ['realTest']);
 	
-	grunt.registerTask('default', ['build', 'compile', 'test']);
+	grunt.registerTask('default', ['build', 'compile', 'quickTest']);
 	
 };
